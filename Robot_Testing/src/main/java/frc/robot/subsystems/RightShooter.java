@@ -3,9 +3,13 @@ package frc.robot.subsystems;
 import frc.robot.Robot;
 import frc.lib.models.*;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -19,13 +23,15 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
 	// Set Different Speeds
 	private double conversionFactor = 4096 / 600;
 	private double zeroVelocity = 0*conversionFactor;
-	private double maxVelocity = 0*conversionFactor;
+	private double maxVelocity = 5000*conversionFactor;
 
 	public final static int Shooter_PIDX = 0;
 
 	public double maxVelocityLimit = maxVelocity;
-	public double lowVelocityLimit = -5000;
+	public double lowVelocityLimit = 0;
 	private VelocityVoltage targetVelocityVoltage = new VelocityVoltage(0);
+	private VelocityDutyCycle targetVelocityDutyCycle = new VelocityDutyCycle(0);
+
     public double targetVelocity = 0;
 	private double arbitraryFeedForward = 0.0;
 
@@ -37,7 +43,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
 	public RightShooter() {
         /** Shooter Motor Configuration */
         /* Motor Inverts and Neutral Mode */
-        RightShooterFalcon.setInverted(true);
+		RightShooterFXConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         RightShooterFXConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         /* Current Limiting */
@@ -65,6 +71,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
         // Config Motor
         RightShooterFalcon.getConfigurator().apply(RightShooterFXConfig);
         RightShooterFalcon.getConfigurator().setPosition(0.0);
+
 	}
 
 	//sets control mode to motion magic
@@ -84,8 +91,10 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
     */
 
 	public void velocityControl() {
-        targetVelocityVoltage.withVelocity(targetVelocity);
-		this.RightShooterFalcon.setControl(targetVelocityVoltage);
+        //targetVelocityVoltage.withVelocity(targetVelocity);
+		//this.RightShooterFalcon.setControl(targetVelocityVoltage);
+		targetVelocityDutyCycle.withVelocity(targetVelocity);
+		this.RightShooterFalcon.setControl(targetVelocityDutyCycle);
 	}
 
 	public double getCurrentDraw() {
