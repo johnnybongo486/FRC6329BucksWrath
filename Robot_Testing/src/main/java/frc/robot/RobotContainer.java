@@ -3,8 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.auto.AutonomousSelector;
 import frc.robot.commands.Drivetrain.PIDTurnToAngle;
 import frc.robot.commands.Drivetrain.TeleopSwerve;
 import frc.robot.commands.Shooter.JoystickShooter;
@@ -19,7 +21,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Autonomous Selector */
-    //private final AutonomousSelector autonomousSelector = new AutonomousSelector();
+    private final AutonomousSelector autonomousSelector = new AutonomousSelector();
     
     /* Controllers */
     private final Joystick driver = new Joystick(0);
@@ -137,7 +139,7 @@ public class RobotContainer {
     }
 
     /* Runs the Autonomous Selector*/
-    /*public Command getAutonomousCommand() {
+    public Command getAutonomousCommand() {
         return autonomousSelector.getCommand(swerve);
-    }*/
+    }
 }

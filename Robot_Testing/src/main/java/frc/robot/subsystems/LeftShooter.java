@@ -32,7 +32,7 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
     public double targetVelocity = 0;
 	private double arbitraryFeedForward = 0.0;
 
-	private final static double onTargetThreshold = 100;
+	private final static double onTargetThreshold = 1;
 
 	public TalonFX LeftShooterFalcon = new TalonFX(13);
     public TalonFXConfiguration leftShooterFXConfig = new TalonFXConfiguration();
@@ -50,7 +50,7 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
         leftShooterFXConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
 
         /* PID Config */
-        leftShooterFXConfig.Slot0.kP = 0.05;
+        leftShooterFXConfig.Slot0.kP = 0.2;
         leftShooterFXConfig.Slot0.kI = 0;
         leftShooterFXConfig.Slot0.kD = 0;
 

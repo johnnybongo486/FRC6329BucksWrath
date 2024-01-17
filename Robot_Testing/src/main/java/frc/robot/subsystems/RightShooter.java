@@ -35,7 +35,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
     public double targetVelocity = 0;
 	private double arbitraryFeedForward = 0.0;
 
-	private final static double onTargetThreshold = 100;
+	private final static double onTargetThreshold = 1;
 
 	public TalonFX RightShooterFalcon = new TalonFX(14);
     public TalonFXConfiguration RightShooterFXConfig = new TalonFXConfiguration();
@@ -53,7 +53,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
         RightShooterFXConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
 
         /* PID Config */
-        RightShooterFXConfig.Slot0.kP = 0.05;
+        RightShooterFXConfig.Slot0.kP = 0.2;
         RightShooterFXConfig.Slot0.kI = 0;
         RightShooterFXConfig.Slot0.kD = 0;
 
@@ -170,7 +170,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
 
 	public double joystickShooter(){
 		double value = 0;
-		value = Robot.robotContainer.getOperatorRightStickY();
+		value = -Robot.robotContainer.getOperatorRightStickY();
 		return value;
 	}
 

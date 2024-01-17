@@ -3,6 +3,9 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -127,6 +130,21 @@ public final class Constants {
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
+
+        //added for auto
+        public static final double maxModuleSpeed = 4.5; // M/S
+        public static final Translation2d flModuleOffset = new Translation2d(0.4, 0.4);
+        public static final Translation2d frModuleOffset = new Translation2d(0.4, -0.4);
+        public static final Translation2d blModuleOffset = new Translation2d(-0.4, 0.4);
+        public static final Translation2d brModuleOffset = new Translation2d(-0.4, -0.4);
+
+        public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+            new PIDConstants(5.0, 0, 0), // Translation constants 
+            new PIDConstants(5.0, 0, 0), // Rotation constants 
+            maxModuleSpeed, 
+            flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
+            new ReplanningConfig()
+            );
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
