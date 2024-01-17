@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -9,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.auto.AutonomousSelector;
 import frc.robot.commands.Drivetrain.PIDTurnToAngle;
 import frc.robot.commands.Drivetrain.TeleopSwerve;
+import frc.robot.commands.Shooter.AutoShooter;
 import frc.robot.commands.Shooter.JoystickShooter;
 import frc.robot.subsystems.*;
 //import frc.robot.auto.AutonomousSelector;
@@ -63,7 +66,10 @@ public class RobotContainer {
 
         leftShooter.setDefaultCommand(new JoystickShooter());
         rightShooter.setDefaultCommand(new JoystickShooter());
-        
+
+        /* Command registration for PathPlanner */     
+        NamedCommands.registerCommand("BothShootersAuto",new AutoShooter());
+
         /* Configure the button bindings */
         configureButtonBindings();
     }
