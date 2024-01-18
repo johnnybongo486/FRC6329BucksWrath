@@ -51,6 +51,8 @@ public class RobotContainer {
     private final Swerve swerve = new Swerve();
     public static LeftShooter leftShooter = new LeftShooter();
     public static RightShooter rightShooter = new RightShooter();
+    //TODO: Add Shooter subsystem
+    //TODO: Add Intake subsystem
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -66,6 +68,8 @@ public class RobotContainer {
 
         leftShooter.setDefaultCommand(new JoystickShooter());
         rightShooter.setDefaultCommand(new JoystickShooter());
+        //TODO: set default commands for intake and shooter subsystems
+        // Default shooter command: Point at Speaker
 
         /* Command registration for PathPlanner */     
         NamedCommands.registerCommand("BothShootersAuto",new AutoShooter());
@@ -118,6 +122,20 @@ public class RobotContainer {
             360));
         
         /* Operator Buttons */
+        //TODO: Add button bindings for:
+        /* Drop intake to floor and Run intake 
+         * Place intake high and Run intake
+         * Point shooter at Amp
+         * Point shooter serializer at Amp
+         * Eject from serializer to amp
+         * Eject from shooter to amp
+         * Serialize note into shooter (chained with intake?)
+         * Shoot
+         * Point shooter by joystick
+         * Point intake by joystick
+         * Retract intake?
+         * 
+        */
 
     }
 
