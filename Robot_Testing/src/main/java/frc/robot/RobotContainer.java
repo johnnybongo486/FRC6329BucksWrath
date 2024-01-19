@@ -67,9 +67,11 @@ public class RobotContainer {
                 robotCentric
             )
         );
-
+        // This section is for testing only
+        // Shooter and wrists cannot both be controlled at the same time by joysticks
         leftShooter.setDefaultCommand(new JoystickShooter());
         rightShooter.setDefaultCommand(new JoystickShooter());
+        
         intakeWrist.setDefaultCommand(new JoystickIntakeWrist());
         shooterWrist.setDefaultCommand(new JoystickShooterWrist());
         // Default shooter command: Point at Speaker
