@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.auto.AutonomousSelector;
 import frc.robot.commands.Drivetrain.PIDTurnToAngle;
 import frc.robot.commands.Drivetrain.TeleopSwerve;
+import frc.robot.commands.Intake.JoystickIntakeWrist;
 import frc.robot.commands.Shooter.AutoShooter;
 import frc.robot.commands.Shooter.JoystickShooter;
+import frc.robot.commands.Shooter.JoystickShooterWrist;
 import frc.robot.subsystems.*;
 //import frc.robot.auto.AutonomousSelector;
 
@@ -51,8 +53,8 @@ public class RobotContainer {
     private final Swerve swerve = new Swerve();
     public static LeftShooter leftShooter = new LeftShooter();
     public static RightShooter rightShooter = new RightShooter();
-    //TODO: Add Shooter subsystem
-    //TODO: Add Intake subsystem
+    public static IntakeWrist intakeWrist = new IntakeWrist();
+    public static ShooterWrist shooterWrist = new ShooterWrist();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -68,7 +70,8 @@ public class RobotContainer {
 
         leftShooter.setDefaultCommand(new JoystickShooter());
         rightShooter.setDefaultCommand(new JoystickShooter());
-        //TODO: set default commands for intake and shooter subsystems
+        intakeWrist.setDefaultCommand(new JoystickIntakeWrist());
+        shooterWrist.setDefaultCommand(new JoystickShooterWrist());
         // Default shooter command: Point at Speaker
 
         /* Command registration for PathPlanner */     
