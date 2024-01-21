@@ -213,11 +213,11 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 	}
 
 	public void updateDashboard() {
-		SmartDashboard.putNumber("Wrist Position", this.getCurrentPosition());
-		SmartDashboard.putNumber("Wrist Target Position", this.getTargetPosition());
-		SmartDashboard.putNumber("Wrist Position Error", this.getPositionError());
-		SmartDashboard.putNumber("Wrist Velocity", this.getCurrentVelocity());
-		SmartDashboard.putNumber("Wrist Current", this.getCurrentDraw());
+		SmartDashboard.putNumber("Intake Wrist Position", this.getCurrentPosition());
+		SmartDashboard.putNumber("Intake Wrist Target Position", this.getTargetPosition());
+		SmartDashboard.putNumber("Intake Wrist Position Error", this.getPositionError());
+		SmartDashboard.putNumber("Intake Wrist Velocity", this.getCurrentVelocity());
+		SmartDashboard.putNumber("Intake Wrist Current", this.getCurrentDraw());
 	}
 
 	@Override

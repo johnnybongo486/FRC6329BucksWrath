@@ -213,11 +213,11 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
 	}
 
 	public void updateDashboard() {
-		SmartDashboard.putNumber("Wrist Position", this.getCurrentPosition());
-		SmartDashboard.putNumber("Wrist Target Position", this.getTargetPosition());
-		SmartDashboard.putNumber("Wrist Position Error", this.getPositionError());
-		SmartDashboard.putNumber("Wrist Velocity", this.getCurrentVelocity());
-		SmartDashboard.putNumber("Wrist Current", this.getCurrentDraw());
+		SmartDashboard.putNumber("Shooter Wrist Position", this.getCurrentPosition());
+		SmartDashboard.putNumber("Shooter Wrist Target Position", this.getTargetPosition());
+		SmartDashboard.putNumber("Shooter Wrist Position Error", this.getPositionError());
+		SmartDashboard.putNumber("ShooterWrist Velocity", this.getCurrentVelocity());
+		SmartDashboard.putNumber("Shooter Wrist Current", this.getCurrentDraw());
 	}
 
 	@Override

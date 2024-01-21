@@ -5,7 +5,6 @@ import frc.lib.models.*;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
-import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -27,7 +26,6 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
 
 	public double maxVelocityLimit = maxVelocity;
 	public double lowVelocityLimit = 0;
-	private VelocityVoltage targetVelocityVoltage = new VelocityVoltage(0);
 	private VelocityDutyCycle targetVelocityDutyCycle = new VelocityDutyCycle(0);
     public double targetVelocity = 0;
 	private double arbitraryFeedForward = 0.0;
@@ -70,25 +68,7 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
         LeftShooterFalcon.getConfigurator().setPosition(0.0);
 	}
 
-	//sets control mode to motion magic
-	/*public void setShooter(ControlMode controlMode, double signal) {
-		if (controlMode == ControlMode.Velocity) {
-			this.manageVelocity(signal);
-		}
-		LeftShooterFalcon.set(controlMode, signal);
-	}
-
-	public void setShooter(ControlMode controlMode, double signal, DemandType demandType, double demand) {
-		if (controlMode == ControlMode.Velocity) {
-			this.manageVelocity(signal);
-		}
-		LeftShooterFalcon.set(controlMode, signal, demandType, demand);
-	}
-    */
-
 	public void velocityControl() {
-        //targetVelocityVoltage.withVelocity(targetVelocity);
-		//this.LeftShooterFalcon.setControl(targetVelocityVoltage);
 		targetVelocityDutyCycle.withVelocity(targetVelocity);
 		this.LeftShooterFalcon.setControl(targetVelocityDutyCycle);
 	}

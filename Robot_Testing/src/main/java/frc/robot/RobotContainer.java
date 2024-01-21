@@ -12,9 +12,11 @@ import frc.robot.auto.AutonomousSelector;
 import frc.robot.commands.Drivetrain.PIDTurnToAngle;
 import frc.robot.commands.Drivetrain.TeleopSwerve;
 import frc.robot.commands.Intake.JoystickIntakeWrist;
+import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.AutoShooter;
 import frc.robot.commands.Shooter.JoystickShooter;
 import frc.robot.commands.Shooter.JoystickShooterWrist;
+import frc.robot.commands.Shooter.StopFeeder;
 import frc.robot.subsystems.*;
 //import frc.robot.auto.AutonomousSelector;
 
@@ -55,6 +57,8 @@ public class RobotContainer {
     public static RightShooter rightShooter = new RightShooter();
     public static IntakeWrist intakeWrist = new IntakeWrist();
     public static ShooterWrist shooterWrist = new ShooterWrist();
+    public static Intake intake = new Intake();
+    public static Feeder feeder = new Feeder();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -67,14 +71,18 @@ public class RobotContainer {
                 robotCentric
             )
         );
-        // This section is for testing only
-        // Shooter and wrists cannot both be controlled at the same time by joysticks
-        leftShooter.setDefaultCommand(new JoystickShooter());
-        rightShooter.setDefaultCommand(new JoystickShooter());
+        /* This section is for testing only
+        // Shooter and wrists cannot both be controlled at the same time by joysticks */
+
+        //leftShooter.setDefaultCommand(new JoystickShooter());
+        //rightShooter.setDefaultCommand(new JoystickShooter());
         
         intakeWrist.setDefaultCommand(new JoystickIntakeWrist());
         shooterWrist.setDefaultCommand(new JoystickShooterWrist());
-        // Default shooter command: Point at Speaker
+        
+        // Sets Default Commands for intake and feeder motors
+        intake.setDefaultCommand(new StopIntake());
+        feeder.setDefaultCommand(new StopFeeder());
 
         /* Command registration for PathPlanner */     
         NamedCommands.registerCommand("BothShootersAuto",new AutoShooter());
