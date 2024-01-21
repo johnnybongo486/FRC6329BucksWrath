@@ -59,6 +59,8 @@ public class RobotContainer {
     public static ShooterWrist shooterWrist = new ShooterWrist();
     public static Intake intake = new Intake();
     public static Feeder feeder = new Feeder();
+    public static FrontLimelight frontLimelight = new FrontLimelight();
+    public static RearLimelight rearLimelight = new RearLimelight();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
