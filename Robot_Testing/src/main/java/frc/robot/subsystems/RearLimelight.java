@@ -25,6 +25,7 @@ public class RearLimelight extends SubsystemBase {
       prelimta = table.getEntry("ta");
       prelimtx = table.getEntry("tx");
       prelimty = table.getEntry("ty");
+      
    }
 
    public void updateGameState(){
