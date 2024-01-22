@@ -7,9 +7,8 @@ import frc.robot.subsystems.Swerve;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -19,20 +18,16 @@ public class VisionAlignShoot extends Command {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private Boolean robotCentricSup;
-    private double slowSpeed = 0.2;
-    private double midSpeed = 0.5;
-    private double elevatorHeight = 0;
+    //private double slowSpeed = 0.2;
+    //private double midSpeed = 0.5;
+    //private double elevatorHeight = 0;
 
     private double tx = 0;
     private double ty = 0;
 
-    private double kPgain = 0.016; /* percent throttle per degree of error */   // 0.016 
-    private double kIgain = 0.2;  // .06
-    private double kDgain = 0.0002; /* percent throttle per angular velocity dps */
-    private double errorSum = 0;
-    private double iLimit = 4;
-    private double lastTimeStamp = 0;
-    private double lastError = 0; 
+    private final PIDController angleController = new PIDController(0.012, 0.2, 0.0002);
+    private double targetAngle = 0;
+
 
     public VisionAlignShoot(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, Boolean robotCentricSup) {
         this.s_Swerve = s_Swerve;
@@ -48,9 +43,7 @@ public class VisionAlignShoot extends Command {
     public void initialize() {
         tx = RobotContainer.frontLimelight.getX();
         ty = RobotContainer.frontLimelight.getY();
-        errorSum = 0;
-        lastError = 0;
-        lastTimeStamp = Timer.getFPGATimestamp();
+        angleController.setTolerance(3);  // needs to be tuned
     }
     
     @Override
@@ -66,15 +59,7 @@ public class VisionAlignShoot extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
 
-        double dt = Timer.getFPGATimestamp() - lastTimeStamp;
-        
-        if (Math.abs(tx) < iLimit) {
-            errorSum += tx * dt;
-        }
-
-        double errorRate = (tx - lastError) / dt;
-
-        double rotationVal = (tx) * kPgain + kIgain * errorSum + errorRate * kDgain;
+        double rotationVal = angleController.calculate(tx,targetAngle);
 
         /*if (elevatorHeight >= 30000) {
             translationVal = translationVal * slowSpeed;
@@ -97,8 +82,5 @@ public class VisionAlignShoot extends Command {
             !robotCentricSup, 
             true
         );
-
-        lastTimeStamp = Timer.getFPGATimestamp();
-        lastError = tx;
     }
 }

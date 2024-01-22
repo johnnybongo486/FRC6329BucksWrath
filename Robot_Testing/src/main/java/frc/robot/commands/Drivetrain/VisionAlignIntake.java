@@ -7,6 +7,7 @@ import frc.robot.subsystems.Swerve;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
@@ -25,24 +26,12 @@ public class VisionAlignIntake extends Command {
 
     private double tx = 0;
     private double ty = 0;
-    private double ta = 0;
+    private double ta = 0;// needs to be checked
 
-    private double kPgain = 0.016; /* percent throttle per degree of error */   // 0.016 
-    private double kIgain = 0.2;  // .06
-    private double kDgain = 0.0002; /* percent throttle per angular velocity dps */
-
-    private double aPgain = 0.016; /* percent throttle per degree of error */   // 0.016 
-    private double aIgain = 0.2;  // .06
-    private double aDgain = 0.0002; /* percent throttle per angular velocity dps */
+    private final PIDController angleController = new PIDController(0.012, 0.2, 0.0002);
+    private double targetAngle = 0;
+    private final PIDController distanceController = new PIDController(0.012, 0.2, 0.0002);
     private double targetArea = 0;  // what is the area when we pick up gp?
-
-    private double errorSum = 0;
-    private double errorSumA = 0;
-    private double iLimit = 4;
-    private double iLimitA = 4;
-    private double lastTimeStamp = 0;
-    private double lastError = 0;
-    private double lastErrorA = 0; 
 
     public VisionAlignIntake(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, Boolean robotCentricSup) {
         this.s_Swerve = s_Swerve;
@@ -59,11 +48,9 @@ public class VisionAlignIntake extends Command {
         tx = RobotContainer.rearLimelight.getX();
         ty = RobotContainer.rearLimelight.getY();
         ta = RobotContainer.rearLimelight.getArea();
-        errorSum = 0;
-        errorSumA = 0;
-        lastError = 0;
-        lastErrorA = 0;
-        lastTimeStamp = Timer.getFPGATimestamp();
+
+        angleController.setTolerance(5);  // needs to be checked
+        distanceController.setTolerance(5);  // needs to be checked
     }
     
     @Override
@@ -76,22 +63,9 @@ public class VisionAlignIntake extends Command {
         ty = RobotContainer.rearLimelight.getY();
         ta = RobotContainer.rearLimelight.getArea();
 
-        double dt = Timer.getFPGATimestamp() - lastTimeStamp;
-        
-        if (Math.abs(tx) < iLimit) {
-            errorSum += tx * dt;
-        }
-
-        if (Math.abs(ta) < iLimitA) {
-            errorSumA += ta *dt;
-        }
-
-        double errorRate = (tx - lastError) / dt;
-        double errorRateA = (ta - lastErrorA) / dt;
-
-        double rotationVal = (tx) * kPgain + kIgain * errorSum + errorRate * kDgain;
-        double strafeVal = (tx) * kPgain + kIgain * errorSum + errorRate * kDgain;
-        double translationVal = (ta) * aPgain + aIgain * errorSumA + errorRateA * aDgain;
+        double rotationVal = angleController.calculate(tx,targetAngle);
+        double strafeVal = angleController.calculate(tx,targetAngle);
+        double translationVal = distanceController.calculate(ta,targetArea);
 
         /*if (elevatorHeight >= 30000) {
             translationVal = translationVal * slowSpeed;
@@ -115,8 +89,5 @@ public class VisionAlignIntake extends Command {
             true
         );
 
-        lastTimeStamp = Timer.getFPGATimestamp();
-        lastError = tx;
-        lastErrorA = ta;
     }
 }
