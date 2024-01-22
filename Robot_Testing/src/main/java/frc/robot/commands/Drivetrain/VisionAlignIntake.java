@@ -30,10 +30,19 @@ public class VisionAlignIntake extends Command {
     private double kPgain = 0.016; /* percent throttle per degree of error */   // 0.016 
     private double kIgain = 0.2;  // .06
     private double kDgain = 0.0002; /* percent throttle per angular velocity dps */
+
+    private double aPgain = 0.016; /* percent throttle per degree of error */   // 0.016 
+    private double aIgain = 0.2;  // .06
+    private double aDgain = 0.0002; /* percent throttle per angular velocity dps */
+    private double targetArea = 0;  // what is the area when we pick up gp?
+
     private double errorSum = 0;
+    private double errorSumA = 0;
     private double iLimit = 4;
+    private double iLimitA = 4;
     private double lastTimeStamp = 0;
-    private double lastError = 0; 
+    private double lastError = 0;
+    private double lastErrorA = 0; 
 
     public VisionAlignIntake(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, Boolean robotCentricSup) {
         this.s_Swerve = s_Swerve;
@@ -51,7 +60,9 @@ public class VisionAlignIntake extends Command {
         ty = RobotContainer.rearLimelight.getY();
         ta = RobotContainer.rearLimelight.getArea();
         errorSum = 0;
+        errorSumA = 0;
         lastError = 0;
+        lastErrorA = 0;
         lastTimeStamp = Timer.getFPGATimestamp();
     }
     
@@ -65,20 +76,22 @@ public class VisionAlignIntake extends Command {
         ty = RobotContainer.rearLimelight.getY();
         ta = RobotContainer.rearLimelight.getArea();
 
-        
-        /* Get Values, Deadband*/
-        double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
-        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-
         double dt = Timer.getFPGATimestamp() - lastTimeStamp;
         
         if (Math.abs(tx) < iLimit) {
             errorSum += tx * dt;
         }
 
+        if (Math.abs(ta) < iLimitA) {
+            errorSumA += ta *dt;
+        }
+
         double errorRate = (tx - lastError) / dt;
+        double errorRateA = (ta - lastErrorA) / dt;
 
         double rotationVal = (tx) * kPgain + kIgain * errorSum + errorRate * kDgain;
+        double strafeVal = (tx) * kPgain + kIgain * errorSum + errorRate * kDgain;
+        double translationVal = (ta) * aPgain + aIgain * errorSumA + errorRateA * aDgain;
 
         /*if (elevatorHeight >= 30000) {
             translationVal = translationVal * slowSpeed;
@@ -104,5 +117,6 @@ public class VisionAlignIntake extends Command {
 
         lastTimeStamp = Timer.getFPGATimestamp();
         lastError = tx;
+        lastErrorA = ta;
     }
 }
