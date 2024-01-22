@@ -21,7 +21,7 @@ public class FrontLimelight extends SubsystemBase {
 
    public FrontLimelight() {
       Inst = NetworkTableInstance.getDefault();
-      table = Inst.getTable("limelight");
+      table = Inst.getTable("limelight-shooter");
       prelimta = table.getEntry("ta");
       prelimtx = table.getEntry("tx");
       prelimty = table.getEntry("ty");
@@ -49,18 +49,18 @@ public class FrontLimelight extends SubsystemBase {
    }
 
    public void visionMode(){
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+      NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("camMode").setNumber(0);
    }
 
    public void cameraMode(){
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+      NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("ledMode").setNumber(1);
+      NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("camMode").setNumber(1);
    }
 
    public void updateDashboard() {
-	   SmartDashboard.putNumber("ta", getArea());
-      SmartDashboard.putNumber("tx", getX());
-      SmartDashboard.putNumber("ty", getY());
+	   SmartDashboard.putNumber("front ta", getArea());
+      SmartDashboard.putNumber("front tx", getX());
+      SmartDashboard.putNumber("front ty", getY());
 	}
 }

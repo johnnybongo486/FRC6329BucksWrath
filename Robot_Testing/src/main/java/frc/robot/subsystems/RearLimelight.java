@@ -21,7 +21,7 @@ public class RearLimelight extends SubsystemBase {
 
    public RearLimelight() {
       Inst = NetworkTableInstance.getDefault();
-      table = Inst.getTable("limelight");
+      table = Inst.getTable("limelight-intake");
       prelimta = table.getEntry("ta");
       prelimtx = table.getEntry("tx");
       prelimty = table.getEntry("ty");
@@ -50,18 +50,18 @@ public class RearLimelight extends SubsystemBase {
    }
 
    public void visionMode(){
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+      NetworkTableInstance.getDefault().getTable("limelight-intake").getEntry("ledMode").setNumber(3);
+      NetworkTableInstance.getDefault().getTable("limelight-intake").getEntry("camMode").setNumber(0);
    }
 
    public void cameraMode(){
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+      NetworkTableInstance.getDefault().getTable("limelight-intake").getEntry("ledMode").setNumber(1);
+      NetworkTableInstance.getDefault().getTable("limelight-intake").getEntry("camMode").setNumber(1);
    }
 
    public void updateDashboard() {
-	   SmartDashboard.putNumber("ta", getArea());
-      SmartDashboard.putNumber("tx", getX());
-      SmartDashboard.putNumber("ty", getY());
+	   SmartDashboard.putNumber("rear ta", getArea());
+      SmartDashboard.putNumber("rear tx", getX());
+      SmartDashboard.putNumber("rear ty", getY());
 	}
 }

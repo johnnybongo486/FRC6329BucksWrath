@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.AxisCamera;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -12,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   public static CTREConfigs ctreConfigs;
-
   private Command m_autonomousCommand;
-
+  public static AxisCamera frontLimelight;
+  public static AxisCamera rearLimelight;
   public static RobotContainer robotContainer;
 
   /**
@@ -24,6 +27,19 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     ctreConfigs = new CTREConfigs();
+
+    frontLimelight = CameraServer.addAxisCamera("limelight-shooter", "10.63.29.11");
+    RobotContainer.frontLimelight.cameraMode();
+    NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("stream").setNumber(2);
+    frontLimelight.setFPS(10);
+    frontLimelight.setResolution(160,120);
+
+    rearLimelight = CameraServer.addAxisCamera("limelight-intake", "10.63.29.12");
+    RobotContainer.rearLimelight.cameraMode();
+    NetworkTableInstance.getDefault().getTable("limelight-intake").getEntry("stream").setNumber(2);
+    rearLimelight.setFPS(10);
+    rearLimelight.setResolution(160,120);
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
@@ -45,6 +61,10 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     RobotContainer.leftShooter.updateDashboard();
     RobotContainer.rightShooter.updateDashboard();
+    RobotContainer.shooterWrist.updateDashboard();
+    RobotContainer.intakeWrist.updateDashboard();
+    RobotContainer.frontLimelight.updateDashboard();
+    RobotContainer.rearLimelight.updateDashboard();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
