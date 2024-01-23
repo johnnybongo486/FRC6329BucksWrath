@@ -5,6 +5,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,6 +14,7 @@ public class Feeder extends SubsystemBase {
 
 	public TalonFX FeederFalcon = new TalonFX(20, "canivore");
     public TalonFXConfiguration FeederFXConfig = new TalonFXConfiguration();
+    private DigitalInput input = new DigitalInput(0);
 
 	public Feeder() {
         /** Shooter Motor Configuration */
@@ -43,6 +45,10 @@ public class Feeder extends SubsystemBase {
         FeederFalcon.getConfigurator().setPosition(0.0);
 	}
 
+    public boolean readInput() {
+        return input.get();
+    }
+
 	public void setSpeed(double speed) {
         this.FeederFalcon.set(speed);
 	}
@@ -62,5 +68,6 @@ public class Feeder extends SubsystemBase {
 
 	public void updateDashboard() {
 		SmartDashboard.putNumber("Feeder Current", this.getCurrentDraw());
+        SmartDashboard.putBoolean("IR Break Beam", this.readInput());
 	}
 }
