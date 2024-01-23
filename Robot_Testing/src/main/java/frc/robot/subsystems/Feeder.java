@@ -19,7 +19,7 @@ public class Feeder extends SubsystemBase {
 	public Feeder() {
         /** Shooter Motor Configuration */
         /* Motor Inverts and Neutral Mode */
-		FeederFXConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+		FeederFXConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         FeederFXConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         /* Current Limiting */

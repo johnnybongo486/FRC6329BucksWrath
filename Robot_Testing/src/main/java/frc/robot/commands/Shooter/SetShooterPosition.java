@@ -1,44 +1,40 @@
-package frc.robot.commands.Intake;
+package frc.robot.commands.Shooter;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj2.command.Command;
 
-public class JoystickIntakeWrist extends Command {
+public class SetShooterPosition extends Command {
+	private int shooterPosition = 0;
 
-	private int positionIncrement = 5;
-    
-    public JoystickIntakeWrist() {
-        addRequirements(RobotContainer.intakeWrist);
-    }
+	public SetShooterPosition(int shooterPosition) {
+		this.shooterPosition = shooterPosition;
+
+		addRequirements(RobotContainer.shooterWrist);
+	}
+
 	// Called just before this Command runs the first time
 	public void initialize() {
-
+		RobotContainer.shooterWrist.setTargetPosition(shooterPosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	public void execute() {
-
-		// joystick control
-        double signal = RobotContainer.intakeWrist.JoyStickIntakeWrist();
-
-        RobotContainer.intakeWrist.incrementTargetPosition((int) (signal * positionIncrement));
-
-		RobotContainer.intakeWrist.motionMagicControl();
-
+		RobotContainer.shooterWrist.motionMagicControl();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	public boolean isFinished() {
-		return false;
+			return RobotContainer.shooterWrist.isInPosition(shooterPosition);
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+
 	}
 }
-

@@ -20,23 +20,23 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
 
     // Set Different Heights
 	private int homePosition = 0;
-	private int maxUpTravelPosition = 50000;
+	private int maxUpTravelPosition = 105;
 
-	private int humanPlayerPosition = 23000;
-	private int subwooferShotPosition = 33000;
-	private int podiumShotPosition = 36000;
-	private int frontAmpShotPosition = 39000;
-	private int rearAmpShotPosition = 42000;
+	private int humanPlayerPosition = 100;
+	private int subwooferShotPosition = 90;
+	private int podiumShotPosition = 80;
+	private int frontAmpShotPosition = 70;
+	private int rearAmpShotPosition = 30;
 
-	private int highScorePosition = 15000;
+	private int highScorePosition = 20;
 
 	public int upPositionLimit = maxUpTravelPosition;
 	public int downPositionLimit = 0;
 	private int targetPosition = 0;
     private MotionMagicDutyCycle targetPositionDutyCycle = new MotionMagicDutyCycle(0);
-	private double feedForward = 0.011;
+	private double feedForward = 0.0;
 
-	private final static int onTargetThreshold = 2000;
+	private final static int onTargetThreshold = 10;
 		
 	private TalonFX shooterWristFalcon = new TalonFX(15, "canivore");
 	private TalonFX shooterWristFalconFollower = new TalonFX(16, "canivore");
@@ -63,7 +63,7 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
         shooterWristFXConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
 
         /* PID Config */
-        shooterWristFXConfig.Slot0.kP = 0.8;
+        shooterWristFXConfig.Slot0.kP = 0.05;
         shooterWristFXConfig.Slot0.kI = 0;
         shooterWristFXConfig.Slot0.kD = 0;
 
@@ -187,7 +187,7 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
 
 	public double JoystickShooterWrist(){
 		double value = 0;
-		value = Robot.robotContainer.getOperatorRightStickY();
+		value = -Robot.robotContainer.getOperatorRightStickY();
 		return value;
 	}
 

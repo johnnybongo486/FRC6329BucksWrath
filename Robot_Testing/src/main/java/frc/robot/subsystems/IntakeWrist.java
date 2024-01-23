@@ -20,23 +20,15 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 
     // Set Different Heights
 	private int homePosition = 0;
-	private int maxUpTravelPosition = 50000;
-
-	private int humanPlayerPosition = 23000;
-	private int subwooferShotPosition = 33000;
-	private int podiumShotPosition = 36000;
-	private int frontAmpShotPosition = 39000;
-	private int rearAmpShotPosition = 42000;
-
-	private int highScorePosition = 15000;
+	private int maxUpTravelPosition = 38;
 
 	public int upPositionLimit = maxUpTravelPosition;
 	public int downPositionLimit = 0;
 	private int targetPosition = 0;
     private MotionMagicDutyCycle targetPositionDutyCycle = new MotionMagicDutyCycle(0);
-	private double feedForward = 0.011;
+	private double feedForward = 0.0;
 
-	private final static int onTargetThreshold = 2000;
+	private final static int onTargetThreshold = 1;
 		
 	private TalonFX intakeWristFalcon = new TalonFX(17, "canivore");
 	private TalonFX intakeWristFalconFollower = new TalonFX(18, "canivore");
@@ -63,7 +55,7 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
         intakeWristFXConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
 
         /* PID Config */
-        intakeWristFXConfig.Slot0.kP = 0.8;
+        intakeWristFXConfig.Slot0.kP = 0.05;
         intakeWristFXConfig.Slot0.kI = 0;
         intakeWristFXConfig.Slot0.kD = 0;
 
@@ -146,31 +138,6 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 		return this.maxUpTravelPosition;
 	}
 
-
-	public int getHumanPlayerPosition() {
-		return this.humanPlayerPosition;
-	}
-
-	public int getPodiumShotPosition() {
-		return this.podiumShotPosition;
-	}
-
-	public int getSubwooferShotPosition() {
-		return this.subwooferShotPosition;
-	}
-
-	public int getFrontAmpShotPosition() {
-		return this.frontAmpShotPosition;
-	}
-
-	public int getRearAmpShotPosiiton() {
-		return this.rearAmpShotPosition;
-	}
-
-	public int getHighScorePosition() {
-		return this.highScorePosition;
-	}
-
 	public double getFeedForward() {
 		return this.feedForward;
 	}
@@ -187,7 +154,7 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 
 	public double JoyStickIntakeWrist(){
 		double value = 0;
-		value = Robot.robotContainer.getOperatorLeftStickY();
+		value = -Robot.robotContainer.getOperatorLeftStickY();
 		return value;
 	}
 

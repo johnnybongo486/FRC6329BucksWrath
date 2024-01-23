@@ -39,7 +39,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
 	public RightShooter() {
         /** Shooter Motor Configuration */
         /* Motor Inverts and Neutral Mode */
-		RightShooterFXConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+		RightShooterFXConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         RightShooterFXConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         /* Current Limiting */

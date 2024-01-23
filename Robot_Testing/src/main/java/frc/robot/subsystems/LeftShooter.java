@@ -38,7 +38,7 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
 	public LeftShooter() {
         /** Shooter Motor Configuration */
         /* Motor Inverts and Neutral Mode */
-		leftShooterFXConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+		leftShooterFXConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         leftShooterFXConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         /* Current Limiting */
