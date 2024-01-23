@@ -32,7 +32,7 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
 
 	private final static double onTargetThreshold = 1;
 
-	public TalonFX LeftShooterFalcon = new TalonFX(13);
+	public TalonFX LeftShooterFalcon = new TalonFX(13, "canivore");
     public TalonFXConfiguration leftShooterFXConfig = new TalonFXConfiguration();
 
 	public LeftShooter() {

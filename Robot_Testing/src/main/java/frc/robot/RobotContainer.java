@@ -16,6 +16,7 @@ import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.AutoShooter;
 import frc.robot.commands.Shooter.JoystickShooter;
 import frc.robot.commands.Shooter.JoystickShooterWrist;
+import frc.robot.commands.Shooter.SetShooterVelocity;
 import frc.robot.commands.Shooter.StopFeeder;
 import frc.robot.subsystems.*;
 //import frc.robot.auto.AutonomousSelector;
@@ -50,6 +51,8 @@ public class RobotContainer {
     private final JoystickButton faceFrontButton = new JoystickButton(driver, XboxController.Button.kY.value);
 
     /* Operator Buttons */
+    private final JoystickButton subwooferShotButton = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton podiumShotButton = new JoystickButton(operator, XboxController.Button.kB.value);
 
     /* Subsystems */
     private final Swerve swerve = new Swerve();
@@ -137,6 +140,9 @@ public class RobotContainer {
             360));
         
         /* Operator Buttons */
+        subwooferShotButton.onTrue(new SetShooterVelocity(60, 45));
+        podiumShotButton.onTrue(new SetShooterVelocity(80, 60));
+
         //TODO: Add button bindings for:
         /* Drop intake to floor and Run intake 
          * Place intake high and Run intake

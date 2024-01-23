@@ -33,7 +33,7 @@ public class RightShooter extends SubsystemBase implements IVelocityControlledSu
 
 	private final static double onTargetThreshold = 1;
 
-	public TalonFX RightShooterFalcon = new TalonFX(14);
+	public TalonFX RightShooterFalcon = new TalonFX(14, "canivore");
     public TalonFXConfiguration RightShooterFXConfig = new TalonFXConfiguration();
 
 	public RightShooter() {

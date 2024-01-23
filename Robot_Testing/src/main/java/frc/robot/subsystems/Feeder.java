@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Feeder extends SubsystemBase {
 
-	public TalonFX FeederFalcon = new TalonFX(20);
+	public TalonFX FeederFalcon = new TalonFX(20, "canivore");
     public TalonFXConfiguration FeederFXConfig = new TalonFXConfiguration();
 
 	public Feeder() {

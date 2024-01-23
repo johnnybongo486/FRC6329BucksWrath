@@ -38,8 +38,8 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
 
 	private final static int onTargetThreshold = 2000;
 		
-	private TalonFX shooterWristFalcon = new TalonFX(15);
-	private TalonFX shooterWristFalconFollower = new TalonFX(16);
+	private TalonFX shooterWristFalcon = new TalonFX(15, "canivore");
+	private TalonFX shooterWristFalconFollower = new TalonFX(16, "canivore");
 
     private TalonFXConfiguration shooterWristFXConfig = new TalonFXConfiguration();
 

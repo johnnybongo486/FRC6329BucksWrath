@@ -38,8 +38,8 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 
 	private final static int onTargetThreshold = 2000;
 		
-	private TalonFX intakeWristFalcon = new TalonFX(17);
-	private TalonFX intakeWristFalconFollower = new TalonFX(18);
+	private TalonFX intakeWristFalcon = new TalonFX(17, "canivore");
+	private TalonFX intakeWristFalconFollower = new TalonFX(18, "canivore");
 
     private TalonFXConfiguration intakeWristFXConfig = new TalonFXConfiguration();
 
