@@ -26,7 +26,7 @@ public class IntakeRunFeeder extends Command {
 		}
 
 		else {
-			RobotContainer.feeder.setSpeed(0.6);
+			RobotContainer.feeder.setSpeed(0.3);
 		}
         
 	}

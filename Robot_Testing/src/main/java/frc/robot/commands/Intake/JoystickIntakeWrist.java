@@ -5,7 +5,7 @@ import frc.robot.RobotContainer;
 
 public class JoystickIntakeWrist extends Command {
 
-	private int positionIncrement = 5;
+	private double positionIncrement = 5;
     
     public JoystickIntakeWrist() {
         addRequirements(RobotContainer.intakeWrist);
@@ -21,7 +21,7 @@ public class JoystickIntakeWrist extends Command {
 		// joystick control
         double signal = RobotContainer.intakeWrist.JoyStickIntakeWrist();
 
-        RobotContainer.intakeWrist.incrementTargetPosition((int) (signal * positionIncrement));
+        RobotContainer.intakeWrist.incrementTargetPosition((double) (signal * positionIncrement));
 
 		RobotContainer.intakeWrist.motionMagicControl();
 

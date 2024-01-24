@@ -9,7 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
-public class VisionAlignIntake extends Command {    
+public class Drive2Feet extends Command {    
     private Swerve s_Swerve;    
     private Boolean robotCentricSup;
 
@@ -18,10 +18,10 @@ public class VisionAlignIntake extends Command {
 
     private final PIDController angleController = new PIDController(0.01, 0, 0);  // 0.012 0.2     0.0002
     private double targetAngle = 0;
-    private final PIDController distanceController = new PIDController(0.05, 0, 0);
-    private double targetArea = 6;  // what is the area when we pick up gp?
+    private final PIDController distanceController = new PIDController(0.02, 0, 0);
+    private double targetArea = 9;  // what is the area when we pick up gp?
 
-    public VisionAlignIntake(Swerve s_Swerve, Boolean robotCentricSup) {
+    public Drive2Feet(Swerve s_Swerve, Boolean robotCentricSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
         addRequirements(RobotContainer.rearLimelight);
@@ -39,32 +39,18 @@ public class VisionAlignIntake extends Command {
     
     @Override
     public void execute() {
-        // Find target location
-        tx = RobotContainer.rearLimelight.getX();
-        ta = RobotContainer.rearLimelight.getArea();
 
-        double rotationVal = angleController.calculate(tx,targetAngle);
-        double strafeVal = -angleController.calculate(tx,targetAngle);
-        double translationVal = -distanceController.calculate(ta,targetArea);
-
-        /* Drive */
-        if (ta < 4) {
-            s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-            rotationVal * Constants.Swerve.maxAngularVelocity, 
-            !robotCentricSup, 
-            true
-            );  
-        }
-        
-        else {
-
-        }
+        s_Swerve.drive(
+        new Translation2d(-0.2, 0.0).times(Constants.Swerve.maxSpeed), 
+        0 * Constants.Swerve.maxAngularVelocity, 
+        !robotCentricSup, 
+        true
+        );  
 
     }
 
     public boolean isFinished() {
-		return ta > 4;
+		return false;
 	}
 
 	// Called once after isFinished returns true

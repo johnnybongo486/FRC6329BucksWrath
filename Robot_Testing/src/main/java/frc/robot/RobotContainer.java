@@ -25,7 +25,6 @@ import frc.robot.commands.Shooter.SetShooterPosition;
 import frc.robot.commands.Shooter.SetShooterVelocity;
 import frc.robot.commands.Shooter.StopFeeder;
 import frc.robot.subsystems.*;
-//import frc.robot.auto.AutonomousSelector;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -116,7 +115,7 @@ public class RobotContainer {
         
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroHeading()));  // do i want to zero heading or gyro?
-        intakeButton.whileTrue(new IntakeCommandGroup());
+        intakeButton.whileTrue(new IntakeCommandGroup(swerve));
         intakeButton.whileFalse(new StopIntakeCommandGroup());
         shootButton.whileTrue(new RunIntake().alongWith(new RunFeeder()));
         shootButton.whileFalse(new StopIntake().alongWith(new StopFeeder()));
@@ -156,7 +155,7 @@ public class RobotContainer {
         /* Operator Buttons */
         subwooferShotButton.onTrue(new SetShooterVelocity(10, 10));
         podiumShotButton.onTrue(new SetShooterVelocity(80, 60));
-        shooterUpButton.onTrue(new SetShooterPosition(50));
+        shooterUpButton.onTrue(new SetShooterPosition(8));
         shooterDownButton.onTrue(new SetShooterPosition(0));
 
         //TODO: Add button bindings for:

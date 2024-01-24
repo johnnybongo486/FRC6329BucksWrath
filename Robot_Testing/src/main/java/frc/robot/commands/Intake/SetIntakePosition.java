@@ -4,9 +4,9 @@ import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SetIntakePosition extends Command {
-	private int intakePosition = 0;
+	private double intakePosition = 0;
 
-	public SetIntakePosition(int intakePosition) {
+	public SetIntakePosition(double intakePosition) {
 		this.intakePosition = intakePosition;
 
 		addRequirements(RobotContainer.intakeWrist);

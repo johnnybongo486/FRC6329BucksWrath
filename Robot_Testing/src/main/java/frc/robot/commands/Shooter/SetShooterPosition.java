@@ -4,9 +4,9 @@ import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SetShooterPosition extends Command {
-	private int shooterPosition = 0;
+	private double shooterPosition = 0;
 
-	public SetShooterPosition(int shooterPosition) {
+	public SetShooterPosition(double shooterPosition) {
 		this.shooterPosition = shooterPosition;
 
 		addRequirements(RobotContainer.shooterWrist);

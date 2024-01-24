@@ -6,7 +6,6 @@ import frc.robot.Robot;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
-import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -20,16 +19,16 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 	private boolean isHoldingPosition = false;
 
     // Set Different Heights
-	private int homePosition = 0;
-	private int maxUpTravelPosition = 38;
+	private double homePosition = 0;
+	private double maxUpTravelPosition = 20;
 
-	public int upPositionLimit = maxUpTravelPosition;
-	public int downPositionLimit = 0;
-	private int targetPosition = 0;
-    private PositionDutyCycle targetPositionDutyCycle = new PositionDutyCycle(0);
+	public double upPositionLimit = maxUpTravelPosition;
+	public double downPositionLimit = 0;
+	private double targetPosition = 0;
+    private MotionMagicDutyCycle targetPositionDutyCycle = new MotionMagicDutyCycle(0);
 	private double feedForward = 0.0;
 
-	private final static int onTargetThreshold = 1;
+	private final static double onTargetThreshold = 1;
 		
 	private TalonFX intakeWristFalcon = new TalonFX(17, "canivore");
 	private TalonFX intakeWristFalconFollower = new TalonFX(18, "canivore");
@@ -52,8 +51,8 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 
         /* Current Limiting */
         intakeWristFXConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        intakeWristFXConfig.CurrentLimits.SupplyCurrentLimit = 35;
-        intakeWristFXConfig.CurrentLimits.SupplyCurrentThreshold = 60;
+        intakeWristFXConfig.CurrentLimits.SupplyCurrentLimit = 30;
+        intakeWristFXConfig.CurrentLimits.SupplyCurrentThreshold = 40;
         intakeWristFXConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
 
         /* PID Config */
@@ -62,15 +61,15 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
         intakeWristFXConfig.Slot0.kD = 0;
 
         /* Open and Closed Loop Ramping */
-        intakeWristFXConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.25;
-        intakeWristFXConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25;
+        intakeWristFXConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.1;
+        intakeWristFXConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.1;
 
-        intakeWristFXConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.25;
-        intakeWristFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.25;
+        intakeWristFXConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.1;
+        intakeWristFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.1;
 
         //Config Acceleration and Velocity
-        intakeWristFXConfig.MotionMagic.withMotionMagicAcceleration(100);
-        intakeWristFXConfig.MotionMagic.withMotionMagicCruiseVelocity(100);
+        intakeWristFXConfig.MotionMagic.withMotionMagicAcceleration(200);
+        intakeWristFXConfig.MotionMagic.withMotionMagicCruiseVelocity(200);
 
         // Config Motor
         intakeWristFalcon.getConfigurator().apply(intakeWristFXConfig);
@@ -105,7 +104,7 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 		return this.targetPosition;
 	}
 
-	public boolean setTargetPosition(int position) {
+	public boolean setTargetPosition(double position) {
 		if (!isValidPosition(position)) {
 			return false;
 		} else {
@@ -114,29 +113,29 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 		}
 	}
 
-	public void forceSetTargetPosition(int position) {
+	public void forceSetTargetPosition(double position) {
 		this.targetPosition = position;
 	}
 
-	public void incrementTargetPosition(int increment) {
-		int currentTargetPosition = this.targetPosition;
-		int newTargetPosition = currentTargetPosition + increment;
+	public void incrementTargetPosition(double increment) {
+		double currentTargetPosition = this.targetPosition;
+		double newTargetPosition = currentTargetPosition + increment;
 		if (isValidPosition(newTargetPosition)) {		// && isWristSafe(newTargetPosition) check for other subsystems
 			this.targetPosition = newTargetPosition;
 		}
 	}
 
-	public boolean isValidPosition(int position) {
+	public boolean isValidPosition(double position) {
 		boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
 		return withinBounds;
 	}
 
     // communicate with commands
-	public int getHomePosition() {
+	public double getHomePosition() {
 		return this.homePosition;
 	}
 
-	public int getMaxUpTravelPosition() {
+	public double getMaxUpTravelPosition() {
 		return this.maxUpTravelPosition;
 	}
 
@@ -196,7 +195,7 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 	}
 
 	@Override
-	public boolean isInPosition(int targetPosition) {
+	public boolean isInPosition(double targetPosition) {
 		double currentPosition = this.getCurrentPosition();
 		double positionError = Math.abs(currentPosition - targetPosition);
 		if (positionError < onTargetThreshold) {
