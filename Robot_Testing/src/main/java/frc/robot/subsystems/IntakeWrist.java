@@ -6,6 +6,7 @@ import frc.robot.Robot;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -25,7 +26,7 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 	public int upPositionLimit = maxUpTravelPosition;
 	public int downPositionLimit = 0;
 	private int targetPosition = 0;
-    private MotionMagicDutyCycle targetPositionDutyCycle = new MotionMagicDutyCycle(0);
+    private PositionDutyCycle targetPositionDutyCycle = new PositionDutyCycle(0);
 	private double feedForward = 0.0;
 
 	private final static int onTargetThreshold = 1;
@@ -34,6 +35,7 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
 	private TalonFX intakeWristFalconFollower = new TalonFX(18, "canivore");
 
     private TalonFXConfiguration intakeWristFXConfig = new TalonFXConfiguration();
+	
 
 	public IntakeWrist() {
 		// Clear Sticky Faults
@@ -67,8 +69,8 @@ public class IntakeWrist extends SubsystemBase implements IPositionControlledSub
         intakeWristFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.25;
 
         //Config Acceleration and Velocity
-        intakeWristFXConfig.MotionMagic.withMotionMagicAcceleration(24000);
-        intakeWristFXConfig.MotionMagic.withMotionMagicCruiseVelocity(20000);
+        intakeWristFXConfig.MotionMagic.withMotionMagicAcceleration(100);
+        intakeWristFXConfig.MotionMagic.withMotionMagicCruiseVelocity(100);
 
         // Config Motor
         intakeWristFalcon.getConfigurator().apply(intakeWristFXConfig);

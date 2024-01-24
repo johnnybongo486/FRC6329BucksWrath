@@ -48,7 +48,7 @@ public class LeftShooter extends SubsystemBase implements IVelocityControlledSub
         leftShooterFXConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
 
         /* PID Config */
-        leftShooterFXConfig.Slot0.kP = 0.2;
+        leftShooterFXConfig.Slot0.kP = 0.1;
         leftShooterFXConfig.Slot0.kI = 0;
         leftShooterFXConfig.Slot0.kD = 0;
 

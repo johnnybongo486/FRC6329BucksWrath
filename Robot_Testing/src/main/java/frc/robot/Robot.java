@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
     RobotContainer.intakeWrist.updateDashboard();
     RobotContainer.frontLimelight.updateDashboard();
     RobotContainer.rearLimelight.updateDashboard();
+    RobotContainer.feeder.updateDashboard();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

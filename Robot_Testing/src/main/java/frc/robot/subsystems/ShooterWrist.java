@@ -36,7 +36,7 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
     private MotionMagicDutyCycle targetPositionDutyCycle = new MotionMagicDutyCycle(0);
 	private double feedForward = 0.0;
 
-	private final static int onTargetThreshold = 10;
+	private final static int onTargetThreshold = 5;
 		
 	private TalonFX shooterWristFalcon = new TalonFX(15, "canivore");
 	private TalonFX shooterWristFalconFollower = new TalonFX(16, "canivore");
@@ -75,8 +75,8 @@ public class ShooterWrist extends SubsystemBase implements IPositionControlledSu
         shooterWristFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.25;
 
         //Config Acceleration and Velocity
-        shooterWristFXConfig.MotionMagic.withMotionMagicAcceleration(24000);
-        shooterWristFXConfig.MotionMagic.withMotionMagicCruiseVelocity(20000);
+        shooterWristFXConfig.MotionMagic.withMotionMagicAcceleration(100);
+        shooterWristFXConfig.MotionMagic.withMotionMagicCruiseVelocity(100);
 
         // Config Motor
         shooterWristFalcon.getConfigurator().apply(shooterWristFXConfig);

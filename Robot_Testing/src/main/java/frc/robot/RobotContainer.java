@@ -92,7 +92,7 @@ public class RobotContainer {
         //leftShooter.setDefaultCommand(new JoystickShooter());
         //rightShooter.setDefaultCommand(new JoystickShooter());
         
-        //intakeWrist.setDefaultCommand(new JoystickIntakeWrist());
+        intakeWrist.setDefaultCommand(new JoystickIntakeWrist());
         shooterWrist.setDefaultCommand(new JoystickShooterWrist());
         
         // Sets Default Commands for intake and feeder motors
@@ -154,7 +154,7 @@ public class RobotContainer {
             360));
         
         /* Operator Buttons */
-        subwooferShotButton.onTrue(new SetShooterVelocity(60, 45));
+        subwooferShotButton.onTrue(new SetShooterVelocity(10, 10));
         podiumShotButton.onTrue(new SetShooterVelocity(80, 60));
         shooterUpButton.onTrue(new SetShooterPosition(50));
         shooterDownButton.onTrue(new SetShooterPosition(0));

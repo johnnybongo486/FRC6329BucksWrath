@@ -22,11 +22,11 @@ public class IntakeRunFeeder extends Command {
 		
 		//stop feeder if beam broken
 		if (beamBreak == false) {
-			RobotContainer.feeder.setSpeed(0.5);
+			RobotContainer.feeder.setSpeed(0.0);
 		}
 
 		else {
-			RobotContainer.feeder.setSpeed(0.0);
+			RobotContainer.feeder.setSpeed(0.6);
 		}
         
 	}

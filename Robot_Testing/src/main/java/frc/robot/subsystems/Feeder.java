@@ -16,6 +16,7 @@ public class Feeder extends SubsystemBase {
     public TalonFXConfiguration FeederFXConfig = new TalonFXConfiguration();
     private DigitalInput input = new DigitalInput(0);
 
+
 	public Feeder() {
         /** Shooter Motor Configuration */
         /* Motor Inverts and Neutral Mode */
@@ -34,11 +35,11 @@ public class Feeder extends SubsystemBase {
         FeederFXConfig.Slot0.kD = 0;
 
         /* Open and Closed Loop Ramping */
-        FeederFXConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.25;
-        FeederFXConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25;
+        FeederFXConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.05;
+        FeederFXConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.05;
 
-        FeederFXConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.25;
-        FeederFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.25;
+        FeederFXConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 0.05;
+        FeederFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.05;
 
         // Config Motor
         FeederFalcon.getConfigurator().apply(FeederFXConfig);

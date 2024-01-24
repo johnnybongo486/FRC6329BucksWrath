@@ -15,7 +15,7 @@ public class RunFeeder extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	public void execute() {
-        RobotContainer.feeder.setSpeed(0.5);
+        RobotContainer.feeder.setSpeed(0.9);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
