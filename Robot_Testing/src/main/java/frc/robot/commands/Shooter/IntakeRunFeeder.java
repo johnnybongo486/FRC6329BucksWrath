@@ -26,14 +26,14 @@ public class IntakeRunFeeder extends Command {
 		}
 
 		else {
-			RobotContainer.feeder.setSpeed(0.3);
+			RobotContainer.feeder.setSpeed(0.6);
 		}
         
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	public boolean isFinished() {
-		return false;
+		return beamBreak == false;
 	}
 
 	// Called once after isFinished returns true

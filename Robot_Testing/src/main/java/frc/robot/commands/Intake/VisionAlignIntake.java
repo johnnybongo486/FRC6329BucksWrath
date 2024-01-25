@@ -1,4 +1,4 @@
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands.Intake;
 
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -16,7 +16,8 @@ public class VisionAlignIntake extends Command {
     private double tx = 0;
     private double ta = 0;
 
-    private final PIDController angleController = new PIDController(0.01, 0, 0);  // 0.012 0.2     0.0002
+    private final PIDController angleController = new PIDController(0.005, 0, 0);
+    private final PIDController slideController = new PIDController(0.02, 0, 0);  // added for better PID tuning
     private double targetAngle = 0;
     private final PIDController distanceController = new PIDController(0.05, 0, 0);
     private double targetArea = 6;  // what is the area when we pick up gp?
@@ -25,7 +26,6 @@ public class VisionAlignIntake extends Command {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
         addRequirements(RobotContainer.rearLimelight);
-
         this.robotCentricSup = robotCentricSup;
     }
 
@@ -34,7 +34,8 @@ public class VisionAlignIntake extends Command {
         ta = RobotContainer.rearLimelight.getArea();
 
         angleController.setTolerance(0.05);  // needs to be checked
-        distanceController.setTolerance(0.05);  // needs to be checked
+        slideController.setTolerance(0.05);
+        distanceController.setTolerance(0.05);
     }
     
     @Override
@@ -44,7 +45,7 @@ public class VisionAlignIntake extends Command {
         ta = RobotContainer.rearLimelight.getArea();
 
         double rotationVal = angleController.calculate(tx,targetAngle);
-        double strafeVal = -angleController.calculate(tx,targetAngle);
+        double strafeVal = -slideController.calculate(tx,targetAngle);
         double translationVal = -distanceController.calculate(ta,targetArea);
 
         /* Drive */

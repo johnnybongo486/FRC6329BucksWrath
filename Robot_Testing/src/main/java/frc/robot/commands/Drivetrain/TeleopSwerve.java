@@ -32,26 +32,10 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void execute() {
-        //TODO: I'm not sure if I disabled the elevator consideration here correctly.
-        //elevatorHeight = RobotContainer.elevator.getCurrentPosition();
         /* Get Values, Deadband*/
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
-
-        /*if (elevatorHeight >= 30000) {
-            translationVal = translationVal * slowSpeed;
-            strafeVal = strafeVal * slowSpeed;
-            rotationVal = rotationVal * slowSpeed;
-        }
-
-        else if (elevatorHeight > 5000 && elevatorHeight < 29999) {
-            translationVal = translationVal * midSpeed;
-            strafeVal = strafeVal * midSpeed;
-            rotationVal = rotationVal * midSpeed;
-        }
-
-        else {}*/
 
         /* Drive */
         s_Swerve.drive(
@@ -61,4 +45,19 @@ public class TeleopSwerve extends Command {
             true
         );
     }
+
+    	// Make this return true when this Command no longer needs to run execute()
+	public boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+        end();
+	}
 }

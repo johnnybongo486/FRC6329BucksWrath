@@ -1,6 +1,7 @@
-package frc.robot.commands.Drivetrain;
+package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Drivetrain.Drive2Feet;
 import frc.robot.subsystems.Swerve;
 
 public class VisionIntakeCommandGroup extends SequentialCommandGroup {
